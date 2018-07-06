@@ -21,8 +21,13 @@ function makeFileEntry(fileName, column) {
 }
 
 function makeLocalEntry(fileId) {
+    if (!localStorage.eMiLyFiles) {
+        localStorage.eMiLyFiles = "[]";
+    }
+    var eMiLyFileList = JSON.parse(localStorage.eMiLyFiles);
+    eMiLyFileList(fileId);
     if (typeof (Storage) !== "undefined") {
-        localStorage.fileId = "Submitted";
+        localStorage.eMiLyFiles = JSON.stringify(eMiLyFileList);
     } else {
         alert("Sorry, your browser does not support web storage...");
     }
