@@ -32,5 +32,3 @@ function makeLocalEntry(fileId) {
         alert("Sorry, your browser does not support web storage...");
     }
 }
-
-makeFileEntry("Data.csv", "price_col");
