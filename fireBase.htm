@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Firebase</title>
+
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        // TODO: Replace with your project's customized code snippet
+        var config = {
+            apiKey: "<API_KEY>",
+            authDomain: "<PROJECT_ID>.firebaseapp.com",
+            databaseURL: "https://outlaystore.firebaseio.com",
+            projectId: "<PROJECT_ID>",
+            storageBucket: "<BUCKET>.appspot.com",
+            messagingSenderId: "<SENDER_ID>",
+        };
+        firebase.initializeApp(config);
+
+        var database = firebase.database();
+    </script>
+</head>
+<body>
+    <script>
+        function newFileId() {
+            function s4() {
+                return Math.floor((1 + Math.random()) * 0x10000)
+                    .toString(16)
+                    .substring(1);
+            }
+            return "File-"+s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+        }
+
+        function makeFileEntry(fileId, fileName, column) {
+            firebase.database().ref('files/' + fileId).set({
+                fileName: fileName,
+                column: column
+            });
+        }
+
+        makeFileEntry(newFileId(), "Data.csv", "price_col");
+    </script>
+</body>
+</html>
