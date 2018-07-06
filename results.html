@@ -1,27 +1,88 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
 <head>
-    <title>eMiLy | Results</title>
-    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
-    <script>
-        // Initialize Firebase
-        // TODO: Replace with your project's customized code snippet
-        var config = {
-            apiKey: "<API_KEY>",
-            authDomain: "<PROJECT_ID>.firebaseapp.com",
-            databaseURL: "https://outlaystore.firebaseio.com",
-            projectId: "<PROJECT_ID>",
-            storageBucket: "<BUCKET>.appspot.com",
-            messagingSenderId: "<SENDER_ID>",
-        };
-        firebase.initializeApp(config);
-    </script>
-    <script src="scripts\storeData.js"></script>
-
 </head>
 <body>
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <div>
 
+        <table>
+            <tr>
+                <th>Data file</th>
+                <th>Model Efficiency</th>
+            </tr>
+            <tr>
+                <td>LassoRegression</td>
+                <td>79.8955</td>
+            </tr>
+            <tr>
+                <td>RandomForestClassification</td>
+                <td>1.6956</td>
+            </tr>
+            <tr>
+                <td>GradientBoostingClassification</td>
+                <td>1.5656</td>
+            </tr>
+            <tr>
+                <td>SupportVectorClassification</td>
+                <td>1.3556</td>
+            </tr>
+
+        </table>
+
+
+
+
+    </div>
+    <script>
+        var data = { "Algo1": "50", "Algo2": "100" };
+        function parseData(data) {
+            debugger;
+            var dp = [];
+            for (key in data) {
+                dp.push({ y: data[key], label: key })
+            }
+
+        }
+        parseData(data);
+        function renderChart() {
+            var chart = new CanvasJS.Chart("chartContainer", {
+                animationEnabled: true,
+
+                title: {
+                    text: "Efficiency of models"
+                },
+                axisX: {
+                    interval: 1
+                },
+                axisY2: {
+                    interlacedColor: "rgba(1,77,101,.2)",
+                    gridColor: "rgba(1,77,101,.1)",
+                    title: "Bostonhousing Efficiency"
+                },
+                data: [{
+                    type: "bar",
+                    name: "Efficiency",
+                    axisYType: "secondary",
+                    color: "#014D65",
+                    dataPoints: [
+                        { y: 80.1644, label: "LinearRegression" },
+                        { y: 79.8955, label: "LassoRegression" },
+                        { y: 80.1644, label: "RidgeRegression" },
+                        { y: 84.5916, label: "RandomForestRegression" },
+                        { y: 89.2871, label: "GradientBoostedRegression" },
+                        { y: 63.0435, label: "SupportVectorRegression" },
+                        { y: 86.5689, label: "LogisticRegression" },
+                        { y: 1.6956, label: "RandomForestClassification" },
+                        { y: 1.5656, label: "GradientBoostingClassification" },
+                        { y: 1.3556, label: "SupportVectorClassification" },
+                    ]
+                }]
+                });
+            chart.render();
+        }
+        renderChart();
+    </script>
 </body>
 </html>
