@@ -2,6 +2,9 @@
 <html>
 <head>
 <script>
+    for (var i = 0; i < localStorage.length; i++) {
+        alert(localStorage.getItem(localStorage.key(i)));
+    }
 function clickCounter() {
     if(typeof(Storage) !== "undefined") {
         if (localStorage.clickcount) {
