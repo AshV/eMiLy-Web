@@ -18,7 +18,8 @@ function makeFileEntry(fileName, column) {
         fileName: fileName,
         column: column,
         status: "submitted",
-        result: "Waiting"
+        result: "Waiting",
+        localFilePath: "TBS"
     });
 }
 
