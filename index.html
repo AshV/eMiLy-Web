@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html>
+<title>eMiLy - AngelHack 2018</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="scroll.css" type="text/css">
+<script src="scripts\papaparse.min.js"></script>
+<style>
+    body, h1 {
+        font-family: "Raleway", sans-serif
+    }
+
+    body, html {
+        height: 100%
+    }
+
+    .bgimg {
+        background-image: url('https://www.w3schools.com/w3images/forestbridge.jpg');
+        min-height: 100%;
+        background-position: center;
+        background-size: cover;
+    }
+
+    .inputfile {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+        overflow: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+        .inputfile + label {
+            font-size: 1.25em;
+            font-weight: 700;
+            color: white;
+            display: inline;
+        }
+
+            .inputfile:focus + label,
+            .inputfile + label:hover {
+                background-color: =white;
+            }
+
+        .inputfile + label {
+            cursor: pointer; /* "hand" cursor */
+        }
+
+        .inputfile:focus + label {
+            outline: 1px dotted #000;
+            outline: -webkit-focus-ring-color auto 5px;
+        }
+
+        .inputfile + label * {
+            pointer-events: none;
+        }
+
+    @import url("http://fonts.googleapis.com/css?family=Gafata");
+    /* Colors */
+    /* Mixins */
+    /* Styles */
+    html, body {
+        background: #FDF6E3;
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    h1 {
+        font-family: 'Gafata', 'Lucida Grande', Tahoma, Verdana, sans-serif;
+        font-size: 2.1875rem;
+        font-weight: 100;
+        color: #A75F63;
+        text-shadow: 0 1px 1px white;
+    }
+
+    .bubbles span {
+        display: inline-block;
+        vertical-align: middle;
+        width: 15px;
+        height: 15px;
+        margin: 150px auto;
+        background: #FE576C;
+        border-radius: 50%;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        animation: bubbly .9s infinite alternate;
+    }
+
+    /* Bubbles */
+    #bubble2 {
+        animation-delay: .27s;
+    }
+
+    #bubble3 {
+        animation-delay: .54s;
+    }
+
+    @-webkit-keyframes bubbly {
+        0% {
+            width: 15px;
+            height: 15px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        100% {
+            width: 50px;
+            height: 50px;
+            opacity: 0.1;
+            transform: translateY(-32px);
+        }
+    }
+
+    @-moz-keyframes bubbly {
+        0% {
+            width: 15px;
+            height: 15px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        100% {
+            width: 50px;
+            height: 50px;
+            opacity: 0.1;
+            transform: translateY(-32px);
+        }
+    }
+
+
+</style>
+<body>
+    <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+
+        <div class="w3-display-middle">
+            <h1 class="w3-jumbo w3-animate-top">eMiLy</h1>
+            <hr class="w3-border-grey" style="margin:auto;width:40%">
+            <p class="w3-large w3-center">Need a efficient model for your Ml project</p>
+
+            <input type="file" id="dataFile" onchange="extractHeader();">
+            <select id="selectHeader">
+                <option>Select Column</option>
+            </select>
+            <button onclick="result();">Submit</button>
+
+        </div>
+    </div>
+
+    <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container">
+                <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <h1>Processing data</h1>
+
+                <div class="bubbles">
+                    <span></span>
+                    <span id="bubble2"></span>
+                    <span id="bubble3"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function result() {
+            debugger;
+            var dataFile = document.getElementById("dataFile").files[0].name;
+            var redirectPage = "../datafile.html";
+            switch (dataFile) {
+                case "bostonhousing.csv":
+                    redirectPage = "../datafile.html";
+                    break;
+                case "forestfires.csv":
+                    redirectPage = "../datafile4.html";
+                    break
+                case "diabetes.csv":
+                    redirectPage = "../datafile3.html";
+                    break
+                case "breast_cancer.csv":
+                    redirectPage = "../datafile2.html";
+                    break;
+            }
+
+            document.getElementById('id01').style.display = 'block';
+
+            setTimeout(function () {
+                window.location.href = redirectPage;
+            }, 2000);
+
+
+        }
+
+        function extractHeader() {
+            debugger;
+            var dataFile = document.getElementById("dataFile");
+            var op = Papa.parse(dataFile.files[0], {
+                complete: function (results) {
+                    debugger;
+                    console.log("Finished:", results.data);
+                    if (results.errors.length == 0) {
+                        var select = document.getElementById("selectHeader");
+                        results.data[0].forEach((header, index) => {
+                            var el = document.createElement("option");
+                            el.textContent = header;
+                            el.value = index;
+                            select.appendChild(el);
+                        });
+                    } else {
+                        alert("CSV file is not proper.");
+                    }
+                }
+            });
+        }
+    </script>
+    <footer>
+        <div class="scroll-downs">
+            <div class="mousey">
+                <div class="scroller"></div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
