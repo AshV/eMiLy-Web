@@ -16,7 +16,9 @@ function makeFileEntry(fileName, column) {
     makeLocalEntry(fileId);
     firebase.database().ref('files/' + fileId).set({
         fileName: fileName,
-        column: column
+        column: column,
+        status: "submitted",
+        result: "Waiting"
     });
 }
 
@@ -25,7 +27,7 @@ function makeLocalEntry(fileId) {
         localStorage.eMiLyFiles = "[]";
     }
     var eMiLyFileList = JSON.parse(localStorage.eMiLyFiles);
-    eMiLyFileList(fileId);
+    eMiLyFileList.push(fileId);
     if (typeof (Storage) !== "undefined") {
         localStorage.eMiLyFiles = JSON.stringify(eMiLyFileList);
     } else {

@@ -186,25 +186,14 @@
             debugger;
             var dataFile = document.getElementById("dataFile").files[0].name;
             var redirectPage = "../datafile.html";
-            switch (dataFile) {
-                case "bostonhousing.csv":
-                    redirectPage = "../datafile.html";
-                    break;
-                case "forestfires.csv":
-                    redirectPage = "../datafile4.html";
-                    break
-                case "diabetes.csv":
-                    redirectPage = "../datafile3.html";
-                    break
-                case "breast_cancer.csv":
-                    redirectPage = "../datafile2.html";
-                    break;
-            }
+
+            var e = document.getElementById("selectHeader");
+            var columnName = e.options[e.selectedIndex].text;
 
             document.getElementById('id01').style.display = 'block';
 
             setTimeout(function () {
-                makeFileEntry("Data.csv", "price_col");
+                makeFileEntry(dataFile, columnName);
                 window.location.href = redirectPage;
             }, 2000);
 
