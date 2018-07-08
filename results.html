@@ -6,44 +6,27 @@
     <div id="chartContainer" style="height: 300px; width: 100%;"></div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <div>
-
-        <table>
-            <tr>
-                <th>Data file</th>
-                <th>Model Efficiency</th>
-            </tr>
-            <tr>
-                <td>LassoRegression</td>
-                <td>79.8955</td>
-            </tr>
-            <tr>
-                <td>RandomForestClassification</td>
-                <td>1.6956</td>
-            </tr>
-            <tr>
-                <td>GradientBoostingClassification</td>
-                <td>1.5656</td>
-            </tr>
-            <tr>
-                <td>SupportVectorClassification</td>
-                <td>1.3556</td>
-            </tr>
-
-        </table>
+        <table id="tab"></table>
 
 
 
 
     </div>
     <script>
+
+        alert(location.search.substr(1));
+
         var data = { "Algo1": "50", "Algo2": "100" };
+        var dp = [];
+        var tab = "<tr><th>Algorithm</th><th>Model Efficiency</th></tr>";
         function parseData(data) {
             debugger;
-            var dp = [];
             for (key in data) {
-                dp.push({ y: data[key], label: key })
+                dp.push({ y: Number(data[key]), label: key })
+                tab += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>";
             }
 
+            document.querySelector("#tab").innerHTML = tab;
         }
         parseData(data);
         function renderChart() {
@@ -66,20 +49,9 @@
                     name: "Efficiency",
                     axisYType: "secondary",
                     color: "#014D65",
-                    dataPoints: [
-                        { y: 80.1644, label: "LinearRegression" },
-                        { y: 79.8955, label: "LassoRegression" },
-                        { y: 80.1644, label: "RidgeRegression" },
-                        { y: 84.5916, label: "RandomForestRegression" },
-                        { y: 89.2871, label: "GradientBoostedRegression" },
-                        { y: 63.0435, label: "SupportVectorRegression" },
-                        { y: 86.5689, label: "LogisticRegression" },
-                        { y: 1.6956, label: "RandomForestClassification" },
-                        { y: 1.5656, label: "GradientBoostingClassification" },
-                        { y: 1.3556, label: "SupportVectorClassification" },
-                    ]
+                    dataPoints: dp
                 }]
-                });
+            });
             chart.render();
         }
         renderChart();
