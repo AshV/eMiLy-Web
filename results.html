@@ -38,7 +38,7 @@
                 firebase.database().ref('files/' + id).once('value').then(function (snapshot) {
                     var fileData = snapshot.val();
                     debugger;
-                    data = JSON.parse(fileData.result);
+                    data = JSON.parse(setAlgoName(fileData.result));
                     fileName = fileData.fileName;
 
                     parseData(data);
@@ -56,6 +56,21 @@
             }
 
             document.querySelector("#tab").innerHTML = tab;
+        }
+
+        function setAlgoName(data) {
+            debugger;
+            data = data.replace('Algo0', 'LinearRegression');
+            data = data.replace('Algo1', 'LassoRegression');
+            data = data.replace('Algo2', 'RidgeRegression');
+            data = data.replace('Algo3', 'RandomForestRegression');
+            data = data.replace('Algo4', 'GradientBoostedRegression');
+            data = data.replace('Algo5', 'SupportVectorRegression');
+            data = data.replace('Algo6', 'LogisticRegression');
+            data = data.replace('Algo7', 'RandomForestClassification');
+            data = data.replace('Algo8', 'GradientBoostingClassification');
+            data = data.replace('Algo9', 'SupportVectorClassification');
+            return data;
         }
 
         function renderChart() {

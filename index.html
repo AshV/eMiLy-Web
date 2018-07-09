@@ -184,19 +184,19 @@
 
         function result() {
             debugger;
-            var dataFile = document.getElementById("dataFile").files[0].name;
+            var file = document.getElementById("dataFile").files[0];
 
             var e = document.getElementById("selectHeader");
             var columnName = e.options[e.selectedIndex].text;
 
             document.getElementById('id01').style.display = 'block';
 
-            makeFileEntry(dataFile, columnName);
+
+            makeFileEntry(file, file.name, columnName);
 
             setTimeout(function () {
-               // makeFileEntry(dataFile, columnName);
                 window.location.href = "results.html?" + fileId;
-            }, 2000);
+            }, 5000);
 
 
         }
