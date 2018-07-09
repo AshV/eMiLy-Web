@@ -23,7 +23,7 @@ function makeFileEntry(file, fileName, column) {
         localFilePath: "TBS"
     });
     debugger;
-    triggerTheJob(getBase64(file), fileName, column, fileId);
+    triggerTheJob(file, fileName, column, fileId);
 }
 
 function makeLocalEntry(fileId) {
@@ -53,15 +53,4 @@ function triggerTheJob(file_stream, file_name, column_name, file_id) {
         .then(response => response.json())
         .then(data => alert(data))
         .catch(error => console.error("Error:", error));
-}
-
-function getBase64(file) {
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-        console.log(reader.result);
-    };
-    reader.onerror = function (error) {
-        console.log('Error: ', error);
-    };
 }

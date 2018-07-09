@@ -156,7 +156,8 @@
             <hr class="w3-border-grey" style="margin:auto;width:40%">
             <p class="w3-large w3-center">Need a efficient model for your Ml project</p>
 
-            <input type="file" id="dataFile" onchange="extractHeader();">
+            <input type="file" id="files" name="files" onchange="extractHeader();" />
+            <textarea id="base64" rows="5"></textarea>
             <select id="selectHeader">
                 <option>Select Column</option>
             </select>
@@ -179,23 +180,23 @@
             </div>
         </div>
     </div>
-
+    <script src="scripts\base64.js"></script>
     <script>
-
         function result() {
             debugger;
-            var file = document.getElementById("dataFile").files[0];
+            var file = document.getElementById("files").files[0];
 
             var e = document.getElementById("selectHeader");
             var columnName = e.options[e.selectedIndex].text;
 
             document.getElementById('id01').style.display = 'block';
 
+            var base64File = document.querySelector("#base64").value;
 
-            makeFileEntry(file, file.name, columnName);
+            makeFileEntry(base64File, file.name, columnName);
 
             setTimeout(function () {
-                window.location.href = "results.html?" + fileId;
+               // window.location.href = "results.html?" + fileId;
             }, 5000);
 
 
@@ -203,7 +204,7 @@
 
         function extractHeader() {
             debugger;
-            var dataFile = document.getElementById("dataFile");
+            var dataFile = document.getElementById("files");
             var op = Papa.parse(dataFile.files[0], {
                 complete: function (results) {
                     debugger;
