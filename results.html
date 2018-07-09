@@ -1,26 +1,55 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+    <script>
+        // Initialize Firebase
+        // TODO: Replace with your project's customized code snippet
+        var config = {
+            apiKey: "<API_KEY>",
+            authDomain: "<PROJECT_ID>.firebaseapp.com",
+            databaseURL: "https://outlaystore.firebaseio.com",
+            projectId: "<PROJECT_ID>",
+            storageBucket: "<BUCKET>.appspot.com",
+            messagingSenderId: "<SENDER_ID>",
+        };
+        firebase.initializeApp(config);
+    </script>
 </head>
 <body>
     <div id="chartContainer" style="height: 300px; width: 100%;"></div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <div>
         <table id="tab"></table>
-
-
-
-
     </div>
+
     <script>
-
-        alert(location.search.substr(1));
-
-        var data = { "Algo1": "50", "Algo2": "100" };
+        var id = location.search.substr(1);
+        var data = "";
         var dp = [];
         var tab = "<tr><th>Algorithm</th><th>Model Efficiency</th></tr>";
+        var fileName;
+
+        var starCountRef = firebase.database().ref('files/' + id + '/status');
+        starCountRef.on('value', function (snapshot) {
+            if (snapshot.val() == "processed") {
+                firebase.database().ref('files/' + id).once('value').then(function (snapshot) {
+                    var fileData = snapshot.val();
+                    debugger;
+                    data = JSON.parse(fileData.result);
+                    fileName = fileData.fileName;
+
+                    parseData(data);
+                    renderChart();
+                });
+            } else {
+                document.querySelector("#tab").innerHTML = "waiting for results..."
+            }
+        });
+
         function parseData(data) {
-            debugger;
             for (key in data) {
                 dp.push({ y: Number(data[key]), label: key })
                 tab += "<tr><td>" + key + "</td><td>" + data[key] + "</td></tr>";
@@ -28,7 +57,7 @@
 
             document.querySelector("#tab").innerHTML = tab;
         }
-        parseData(data);
+
         function renderChart() {
             var chart = new CanvasJS.Chart("chartContainer", {
                 animationEnabled: true,
@@ -42,7 +71,7 @@
                 axisY2: {
                     interlacedColor: "rgba(1,77,101,.2)",
                     gridColor: "rgba(1,77,101,.1)",
-                    title: "Bostonhousing Efficiency"
+                    title: fileName
                 },
                 data: [{
                     type: "bar",
@@ -54,7 +83,6 @@
             });
             chart.render();
         }
-        renderChart();
     </script>
 </body>
 </html>

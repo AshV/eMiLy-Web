@@ -185,7 +185,6 @@
         function result() {
             debugger;
             var dataFile = document.getElementById("dataFile").files[0].name;
-            var redirectPage = "../datafile.html";
 
             var e = document.getElementById("selectHeader");
             var columnName = e.options[e.selectedIndex].text;
@@ -196,7 +195,7 @@
 
             setTimeout(function () {
                // makeFileEntry(dataFile, columnName);
-              //  window.location.href = redirectPage;
+                window.location.href = "results.html?" + fileId;
             }, 2000);
 
 
